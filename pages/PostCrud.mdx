@@ -1,0 +1,145 @@
+#Post Crud
+this the most important part of the application is happend and it will add into most of the projects like allways it's
+has the model , api , client
+
+## model
+
+create model in this route `app/models/Post.js`
+
+```javascript
+import mongoose, { Schema } from "mongoose";
+
+mongoose.connect(process.env.MONGODB_URI);
+mongoose.Promise = global.Promise;
+
+const postSchema = new Schema(
+  {
+    title: String,
+    imgurl: String,
+    description: String,
+    category: String,
+    body: String,
+  },
+  {
+    timestamps: true,
+  }
+);
+
+const Post = mongoose.models.Post || mongoose.model("Post", postSchema);
+
+export default Post;
+```
+
+## Api
+
+### route 1
+
+create that here `app/api/Posts/route.js`
+first of all import model and NextResponse to handle the req and rws
+
+```javascript
+import Post from "../../models/Post";
+import { NextResponse } from "next/server";
+```
+
+#### Get All Post
+
+```javascript
+export async function GET() {
+  try {
+    const posts = await Post.find();
+
+    return NextResponse.json({ posts }, { status: 200 });
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json({ message: "Error", err }, { status: 500 });
+  }
+}
+```
+
+#### Post New Post
+
+```javascript
+export async function POST(req) {
+  try {
+    const body = await req.json();
+    const ticketData = body.formData;
+
+    await Post.create(ticketData);
+
+    return NextResponse.json(
+      { message: "پست با موفقیت ساخته شد" },
+      { status: 201 }
+    );
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json({ message: "Error", err }, { status: 500 });
+  }
+}
+```
+
+### route 1
+
+create that here `app/api/Posts/[id]/route.js`
+first of all import model and NextResponse to handle the req and rws
+
+```javascript
+import Post from "../../../models/Post";
+import { NextResponse } from "next/server";
+```
+
+#### Get Single Post
+
+```javascript
+export async function GET(request, { params }) {
+  const { id } = params;
+
+  const foundTicket = await Post.findOne({ _id: id });
+  return NextResponse.json({ foundTicket }, { status: 200 });
+}
+```
+
+#### Update Post
+
+```javascript
+export async function PUT(req, { params }) {
+  try {
+    const { id } = params;
+
+    const body = await req.json();
+    const ticketData = body.formData;
+
+    const updateTicketData = await Post.findByIdAndUpdate(id, {
+      ...ticketData,
+    });
+
+    return NextResponse.json(
+      { message: "پست مورد نظر با موفقیت بروز شد" },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({ message: "Error", error }, { status: 500 });
+  }
+}
+```
+
+#### Delete Post
+
+```javascript
+export async function DELETE(req, { params }) {
+  try {
+    const { id } = params;
+
+    await Post.findByIdAndDelete(id);
+    return NextResponse.json(
+      { message: "پست مورد نظر با موفیقت حذف شد" },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({ message: "Error", error }, { status: 500 });
+  }
+}
+```
+## Client
