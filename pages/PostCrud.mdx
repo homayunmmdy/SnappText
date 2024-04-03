@@ -1,4 +1,5 @@
-#Post Crud
+# Post Crud
+
 this the most important part of the application is happend and it will add into most of the projects like allways it's
 has the model , api , client
 
@@ -142,4 +143,134 @@ export async function DELETE(req, { params }) {
   }
 }
 ```
+
 ## Client
+
+### Get All post
+
+components to get all the posts
+
+```javascript
+const AllPost = async () => {
+  const API_URL = process.env.API_URL;
+
+  try {
+    const res = await fetch(`${API_URL}/api/Posts`, {
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch topics");
+    }
+
+    return res.json();
+  } catch (error) {
+    console.log("Error loading topics: ", error);
+  }
+};
+
+export default AllPost;
+```
+
+### Get Single Post
+
+for this I craeted single function to get one post like this
+
+```javascript
+"use client";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { usePathname } from "next/navigation";
+
+const SinglePost = () => {
+  const pathname = usePathname();
+  const id = pathname.slice(7);
+  const [battle, setBattle] = useState();
+
+  useEffect(() => {
+    const fetchBattle = async () => {
+      try {
+        const response = await axios.get(`/api/Posts/${id}`);
+        setBattle(response.data.foundTicket);
+      } catch (error) {
+        console.error("Error fetching battle:", error);
+      }
+    };
+
+    fetchBattle();
+  }, [id]);
+
+  return battle;
+};
+
+export default SinglePost;
+```
+
+then use that in this route `app/(pages)/Posts/[id]/page.jsx`
+inside the file we use like this
+
+```javascript
+import SinglePost from "../../../ui/home/SinglePost";
+import PostSkelton from "./PostSkelton";
+const Post = () => {
+  const post = SinglePost();
+
+  if (!post) {
+    return <PostSkelton />;
+  }
+  return <p>{post.body}</p>;
+};
+```
+
+also add skelton before get the data
+
+### All post
+
+here is the components to get all posts
+
+```javascript
+const AllPost = async () => {
+  const API_URL = process.env.API_URL;
+
+  try {
+    const res = await fetch(`${API_URL}/api/Posts`, {
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch topics");
+    }
+
+    return res.json();
+  } catch (error) {
+    console.log("Error loading topics: ", error);
+  }
+};
+
+export default AllPost;
+```
+
+and we use this when ever need like this
+
+```javascript
+const Posts = async () => {
+  const data = await AllPost();
+
+  if (!data?.posts) {
+    return <p>No posts.</p>;
+  }
+
+  const posts = data.posts;
+  return (
+    <>
+      {posts && (
+        <>
+          {posts.map((Post, _index) => (
+            <PostTable id={_index} key={_index} ticket={Post} />
+          ))}
+        </>
+      )}
+    </>
+  );
+};
+```
