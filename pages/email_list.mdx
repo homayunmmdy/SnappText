@@ -1,6 +1,6 @@
-# Newsletter
+# Email list
 
-## 3 steps to add Newsletter
+## 3 steps to add Email list
 
 - [model](#1model)
 - [api](#2api)
@@ -8,17 +8,17 @@
 
 ### 1.Model
 
-create model in thie route `app/models/NewsletterSubscription.js`
+create model in thie route `app/models/EmailList.js`
 
 ```javascript
 import mongoose, { Schema } from "mongoose";
-
+ 
 mongoose.connect(process.env.MONGODB_URI);
 mongoose.Promise = global.Promise;
-
-const newsletterSubscriptionSchema = new Schema(
+ 
+const emailListSchema = new Schema(
   {
-    email: {
+   email: {
       type: String,
       required: true,
       unique: true,
@@ -30,12 +30,10 @@ const newsletterSubscriptionSchema = new Schema(
     timestamps: true,
   }
 );
-
-const NewsletterSubscription =
-  mongoose.models.NewsletterSubscription ||
-  mongoose.model("NewsletterSubscription", newsletterSubscriptionSchema);
-
-export default NewsletterSubscription;
+ 
+const EmailList = mongoose.models.EmailList || mongoose.model("EmailList", emailListSchema);
+ 
+export default EmailList;
 ```
 
 ### 2.API
@@ -54,7 +52,7 @@ the first things is import the model and also called the NextResponse to handle 
 server
 
 ```javascript
-import NewsletterSubscription from "../../models/NewsletterSubscription";
+import EmailList from "@/app/models/EmailList";
 import { NextResponse } from "next/server";
 ```
 
@@ -65,9 +63,9 @@ then get all the data
 ```javascript
 export async function GET() {
   try {
-    const subscriptions = await NewsletterSubscription.find();
+    const emails = await EmailList.find();
 
-    return NextResponse.json({ subscriptions }, { status: 200 });
+    return NextResponse.json({ emails }, { status: 200 });
   } catch (err) {
     console.log(err);
     return NextResponse.json({ message: "Error", err }, { status: 500 });
@@ -85,7 +83,7 @@ export async function POST(req) {
     const body = await req.json();
     const { email } = body;
 
-    const existingSubscription = await NewsletterSubscription.findOne({
+    const existingSubscription = await EmailList.findOne({
       email,
     });
     if (existingSubscription) {
@@ -96,7 +94,7 @@ export async function POST(req) {
     }
 
     // Create new subscription
-    await NewsletterSubscription.create({ email });
+    await EmailList.create({ email });
 
     return NextResponse.json(
       { message: "به خبرنامه مگ نتی فای خوش آمدید" },
@@ -116,7 +114,7 @@ the path of this file is different from the path of the first one you need to cr
 like before you need to import the model and NextResponse to handle the req and res like this
 
 ```javascript
-import NewsletterSubscription from "../../../models/NewsletterSubscription";
+import EmailList from "@/app/models/EmailList";
 import { NextResponse } from "next/server";
 ```
 
@@ -127,9 +125,9 @@ export async function DELETE(req, { params }) {
   try {
     const { id } = params;
 
-    await NewsletterSubscription.findByIdAndDelete(id);
+    await EmailList.findByIdAndDelete(id);
     return NextResponse.json(
-      { message: "Newsletter Deleted" },
+      { message: "ایمیل مورد نظر با موفقیت حذف شد" },
       { status: 200 }
     );
   } catch (error) {
@@ -144,11 +142,13 @@ export async function DELETE(req, { params }) {
 for the client is depent where user want to add the newsletter but in the common we add the newsletter at the end of the post
 near to footer as componenets
 
+#### home page
+
 ```javascript
 "use client";
 import React, { useState } from "react";
 import SiteConfig from "../../config/site";
-const Newsletter = () => {
+const EmailList = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
@@ -156,7 +156,7 @@ const Newsletter = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("/api/Newsletter", {
+      const response = await fetch("/api/EmailList", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -182,7 +182,7 @@ const Newsletter = () => {
       <div className="mx-auto">
         <div className="relative isolate overflow-hidden  px-6 py-24   sm:px-24 xl:py-32">
           <h2 className="mx-auto max-w-2xl text-center text-3xl font-bold tracking-tight text-black dark:text-white sm:text-4xl">
-            عضویت در خبرنامه
+            عضویت در ایمیل لیست
           </h2>
           <p className="mx-auto mt-2 max-w-xl text-center text-lg leading-8 text-gray-700 dark:text-gray-300">
             {SiteConfig.description}
@@ -249,5 +249,82 @@ const Newsletter = () => {
   );
 };
 
-export default Newsletter;
+export default EmailList;
+```
+
+#### post page
+
+
+also some time is used inside post page too like this 
+
+```javascript
+"use client";
+import React, { useState } from "react";
+
+const EmailListBox = () => {
+    const [email, setEmail] = useState("");
+    const [message, setMessage] = useState("");
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await fetch("/api/Newsletter", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                setMessage(data.message);
+                setEmail("");
+            } else {
+                setMessage(data.message);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            setMessage("خطایی رخ داد. لطفاً بعداً دوباره امتحان کنید.");
+        }
+    };
+    return (
+        <div className='my-3'>
+            <div class=" w-full rounded-[10px] border border-gray-3 p-4 sm:p-7.5 ">
+                <div className='text-center'>
+                    {message && (
+                        <p className="mx-auto mt-2 max-w-xl text-center text-lg leading-8 text-gray-700 dark:text-gray-300">
+                            {message}
+                        </p>
+                    )}
+                    <h4 class="font-semibold text-custom-4 text-dark mb-4">
+                        خبرنامه
+                    </h4>
+                    <p class="font-medium text-custom-lg mb-5.5">
+                        به 1450 مشترک بپیوندید!
+                    </p>
+                </div>
+                <form onSubmit={handleSubmit}>
+                    <input id="email"
+                        name="email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        placeholder="لطفا ایمیل خود را وارد کنید" class="rounded-md border border-gray-3 bg-white placeholder:text-dark-5 w-full py-3.5 px-5 outline-none text-center focus:shadow-input focus:ring-2 focus:ring-dark-4/20 focus:border-transparent" />
+                    <button class="font-medium rounded-md text-white bg-indigo-700 flex justify-center text-center w-full p-2 hover:opacity-90 transition-all duration-200 mt-4">
+                        اکنون عضو شوید
+                    </button>
+                </form>
+                <p class="text-custom-sm mt-5 text-center">
+                    با ثبت نام، با سیاست حفظ حریم خصوصی ما موافقت می کنید
+                </p>
+            </div>
+        </div>
+    )
+}
+
+export default EmailListBox
 ```
