@@ -1,0 +1,85 @@
+# How to build mutli language website with i18
+
+before starting install this 
+
+```javascript
+npm i next-intl
+```
+
+## files need to add into project 
+
+### middleware
+create file like this  `middleware.js` in the root
+
+```javascript
+import createMiddleware from "next-intl/middleware";
+
+const middlewareConfig = {
+  // A list of all locales that are supported
+  locales: ['en',"de","fa"],
+
+  // If this locale is matched, pathnames work without a prefix (e.g. `/about`)
+  defaultLocale: "en",
+};
+
+export default createMiddleware(middlewareConfig);
+
+export const config: { matcher } = {
+  // Skip all paths that should not be internationalized
+  matcher: ["/((?!api|_next|.*\\..*).*)"],
+};
+
+```
+
+### i18
+after creating middleware you need to create another file with `i18n.js` in the root
+
+```javascript
+import {notFound} from 'next/navigation';
+import {getRequestConfig} from 'next-intl/server';
+ 
+// Can be imported from a shared config
+const locales = ['en',"de","fa"];
+ 
+export default getRequestConfig(async ({locale}) => {
+  // Validate that the incoming `locale` parameter is valid
+  if (!locales.includes(locale as any)) notFound();
+ 
+  return {
+    messages: (await import(`./messages/${locale}.json`)).default
+  };
+});
+```
+### Create json files 
+Now is time to create json file for your languages the 
+the first step is create with name of `messages`( name must be this)
+and inside of the create file with name of lange and json file like this 
+`de.json`
+```javascript
+{
+  "home": {
+    "title": "Hallo daar",
+    "description": "Zorgvuldige cupiditate voluptatem et in. Quaerat fugiat ut veronderstelling behalve u exercitationem quasi. In deleniti eaque aut repudiandae en een id nisi."
+  }
+}
+```
+### Start using in the project 
+in project after the app you put all your file like `page.jsx` `layout.jsx` 
+everything put in folder with this name `[locale]` but the favicon is not need to put inside that 
+this foler for the route based on your language
+
+### Using inside the file 
+it's very simple chose where you want to add theme for example `page.jsx` like this 
+
+```javascript
+import { useTranslations } from "next-intl";
+
+const Home = () => {
+      const t = useTranslations("home");
+      return (
+        <h1>{t("title")}</h1>
+      )
+}
+```
+
+Now your website support multiy language congraulations 
