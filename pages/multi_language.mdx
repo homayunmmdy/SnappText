@@ -24,7 +24,7 @@ const middlewareConfig = {
 
 export default createMiddleware(middlewareConfig);
 
-export const config: { matcher } = {
+export const config = {
   // Skip all paths that should not be internationalized
   matcher: ["/((?!api|_next|.*\\..*).*)"],
 };
@@ -43,7 +43,7 @@ const locales = ['en',"de","fa"];
  
 export default getRequestConfig(async ({locale}) => {
   // Validate that the incoming `locale` parameter is valid
-  if (!locales.includes(locale as any)) notFound();
+  if (!locales.includes(locale)) notFound();
  
   return {
     messages: (await import(`./messages/${locale}.json`)).default
@@ -83,3 +83,27 @@ const Home = () => {
 ```
 
 Now your website support multiy language congraulations 
+
+## Important tip 
+
+for some languages like persian is rtl oppsite of other languages you must change the dir of the html you can do this in the 
+`layout.js` file like this 
+
+```javascript
+import { useLocale } from "next-intl";
+
+export default function RootLayout({ children , params }) {
+  const locale = useLocale();
+
+  if (params.locale !== locale) {
+    notFound();
+  }
+  return (
+    <html lang={locale}  dir={locale === 'fa' ? 'rtl' : 'ltr'}>
+      <body className={inter.className}>
+        {children}
+      </body>
+    </html>
+  );
+}
+```
