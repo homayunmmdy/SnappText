@@ -26,3 +26,10 @@ export type ActionType =
   | { type: "CLOSE_MODAL" }
   | { type: "OPEN_FORM"; snippet?: SnippetType }
   | { type: "CLOSE_FORM" };
+
+
+
+export type AppContextType = React.Context<{
+  state: AppStateType;
+  dispatch: React.Dispatch<ActionType>;
+} | null>;

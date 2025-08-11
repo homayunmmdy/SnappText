@@ -1,15 +1,8 @@
 import { Plus } from "lucide-react";
 import { useContext } from "react";
-import type { ActionType, AppStateType } from "../types";
+import { AppContext } from "../Utility/util";
 
-interface Props {
-  AppContext: React.Context<{
-    state: AppStateType;
-    dispatch: React.Dispatch<ActionType>;
-  } | null>;
-}
-
-const Header: React.FC<Props> = ({ AppContext }: Props) => {
+const Header = () => {
   const context = useContext(AppContext);
   if (!context) return null;
   const { dispatch } = context;
