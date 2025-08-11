@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import type { ActionType, AppStateType } from "../types";
+import type { ActionType, AppStateType, PlaceholderValueType } from "../types";
 
 export  const copyToClipboard = async (text: string): Promise<boolean> => {
   try {
@@ -20,3 +20,13 @@ export const AppContext = createContext<{
   state: AppStateType;
   dispatch: React.Dispatch<ActionType>;
 } | null>(null);
+
+export const replacePlaceholders = (
+  text: string,
+  values: PlaceholderValueType
+): string => {
+  return text.replace(
+    /\{\{([^}]+)\}\}/g,
+    (match, key) => values[key.trim()] || match
+  );
+};
