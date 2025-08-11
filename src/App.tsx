@@ -2,6 +2,7 @@ import React, { useReducer } from "react";
 import { Toaster } from "react-hot-toast";
 import appReducer from "./appReducer";
 import AllSnippets from "./components/AllSnippets";
+import Footer from "./components/Footer";
 import Header from "./components/Header";
 import PlaceholderModal from "./components/PlaceholderModal";
 import SnippetForm from "./components/SnippetForm";
@@ -41,14 +42,14 @@ const App: React.FC = () => {
   return (
     <AppContext.Provider value={{ state, dispatch }}>
       <Toaster />
-      <div className="min-h-screen bg-gray-50">
         <Header />
-
+      <div className="min-h-screen bg-gray-50">
         <AllSnippets state={state} dispatch={dispatch} />
 
         <PlaceholderModal />
         <SnippetForm />
       </div>
+        <Footer />
     </AppContext.Provider>
   );
 };
