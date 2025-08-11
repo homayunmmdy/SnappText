@@ -1,69 +1,59 @@
-# React + TypeScript + Vite
+# 🔴 SnapText
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<img width="1920" height="1148" alt="screencapture-localhost-5173-2025-08-12-01_42_28" src="https://github.com/user-attachments/assets/5c22f794-5bf6-4df6-b79d-06f27a44ab19" />
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+SnapText is a fast and minimal snippet manager for reusable text templates with dynamic placeholders.
 
-## Expanding the ESLint configuration
+### ✨ Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- 🚀 *Instant Copy* — One-click copy for any saved snippet.
+- 🧠 *Dynamic Placeholders* — Add variables like {{company}}, and fill them in via a popup before copying.
+- 🧩 *Workspaces* — Every snippet has its own editable workspace where users can view or modify the final copied text.
+- 🗂 *Snippet Search* — Quickly find your saved snippets by title.
+- 💾 *Local Storage Sync* — All your data is saved locally — no account required.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### 📸 Example Use Case
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+You save a snippet titled “Cover Letter” with this content:
+
+Dear {{company}},
+I’m excited to apply for the position at your company...
+
+When you click the snippet card:
+
+1. A popup asks for company  
+2. You fill in “Google”  
+3. The final text is generated  
+4. It’s copied to your clipboard  
+5. You can also review/edit the generated result in the *workspace* area
+
+---
+
+### 🛠 Built With
+
+- ⚛ [React](https://reactjs.org/)
+- ⚡ [Vite](https://vitejs.dev/)
+- 🎨 [Tailwind CSS](https://tailwindcss.com/)
+- 🧑‍💻 TypeScript
+- 📦 Local Storage for persistence
+---
+
+### 🚀 Getting Started
+
+```bash
+git clone https://github.com/yourusername/snaptext.git
+cd snaptext
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+🙌 Support & Feedback
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+If you find this helpful, star the repo and share your feedback!
+
+Let me know if you'd like me to generate this in your preferred GitHub repo structure or scaffold the code as well.
