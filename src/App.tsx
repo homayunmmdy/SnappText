@@ -1,4 +1,4 @@
-import { Copy, Edit, Plus, Trash2, X } from "lucide-react";
+import { Copy, Edit, Trash2, X } from "lucide-react";
 import React, {
   createContext,
   useContext,
@@ -7,6 +7,7 @@ import React, {
   useState,
 } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import Header from "./components/Header";
 import type {
   ActionType,
   AppStateType,
@@ -88,31 +89,6 @@ const copyToClipboard = async (text: string): Promise<boolean> => {
   } catch {
     return false;
   }
-};
-
-// Header Component
-const Header: React.FC = () => {
-  const context = useContext(AppContext);
-  if (!context) return null;
-  const { dispatch } = context;
-
-  return (
-    <header className="bg-red-500 text-white p-6 shadow-lg">
-      <div className="max-w-6xl mx-auto flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold">SnapText</h1>
-          <p className="text-red-100 mt-1">Quick snippets, instant copy</p>
-        </div>
-        <button
-          onClick={() => dispatch({ type: "OPEN_FORM" })}
-          className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
-        >
-          <Plus className="w-4 h-4" />
-          Add Snippet
-        </button>
-      </div>
-    </header>
-  );
 };
 
 // Snippet Card Component
@@ -437,7 +413,7 @@ const App: React.FC = () => {
     <AppContext.Provider value={{ state, dispatch }}>
       <Toaster />
       <div className="min-h-screen bg-gray-50">
-        <Header />
+        <Header AppContext={AppContext} />
 
         <main className="max-w-6xl mx-auto p-6">
           {state.snippets.length === 0 ? (
