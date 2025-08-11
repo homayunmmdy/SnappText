@@ -59,7 +59,7 @@ const SnippetForm = () => {
                         </h3>
                         <button
                             onClick={() => dispatch({type: "CLOSE_FORM"})}
-                            className="text-gray-400 hover:text-gray-600"
+                            className="text-gray-400 hover:text-gray-600 cursor-pointer"
                         >
                             <X className="w-5 h-5"/>
                         </button>
@@ -101,14 +101,14 @@ const SnippetForm = () => {
                             <button
                                 type="button"
                                 onClick={() => dispatch({type: "CLOSE_FORM"})}
-                                className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
+                                className="flex-1 px-4 py-2 border cursor-pointer border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50"
                             >
                                 Cancel
                             </button>
                             <button
                                 type="button"
                                 onClick={handleSubmit}
-                                className="flex-1 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                                className="flex-1 px-4 py-2 cursor-pointer bg-red-500 text-white rounded-lg hover:bg-red-600"
                             >
                                 {state.editingSnippet ? "Update" : "Add"} Snippet
                             </button>

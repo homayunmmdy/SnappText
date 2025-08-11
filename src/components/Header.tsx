@@ -16,7 +16,7 @@ const Header = () => {
         </div>
         <button
           onClick={() => dispatch({ type: "OPEN_FORM" })}
-          className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+          className="bg-red-600 hover:bg-red-700 px-4 py-2 cursor-pointer rounded-lg flex items-center gap-2 transition-colors"
         >
           <Plus className="w-4 h-4" />
           Add Snippet
