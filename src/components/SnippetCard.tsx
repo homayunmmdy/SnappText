@@ -50,8 +50,7 @@ const SnippetCard: React.FC<Props> = ({ snippet }: Props) => {
                 {snippet.title}
               </h3>
             <p className="text-gray-600 text-sm mb-4 line-clamp-3">
-              {snippet.description.substring(0, 150)}
-              {snippet.description.length > 150 ? "..." : ""}
+              {snippet.description}
             </p>
             </div>
 

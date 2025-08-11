@@ -12,7 +12,7 @@ const SearchBar = () => {
       <input
         type="text"
         placeholder="Search snippets..."
-        className="w-full p-3 border border-gray-300 focus:rounded-lg !pr-10 focus:outline-none focus:ring-2 focus:ring-red-500"
+        className="w-full p-3 border border-gray-300 rounded-lg !pr-10 focus:outline-none focus:ring-2 focus:ring-red-500"
         value={state.searchTerm}
         onChange={(e) =>
           dispatch({ type: "SET_SEARCH_TERM", term: e.target.value })
