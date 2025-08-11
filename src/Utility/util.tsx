@@ -33,7 +33,7 @@ export const replacePlaceholders = (
 
 export const getInitialState = () => {
   try {
-    const savedData = localStorage.getItem("snaptext-data");
+    const savedData = localStorage.getItem("snapptext-data");
     if (savedData) {
       return JSON.parse(savedData);
     }

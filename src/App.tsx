@@ -14,7 +14,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     try {
-      localStorage.setItem('snaptext-data', JSON.stringify(state));
+      localStorage.setItem('snapptext-data', JSON.stringify(state));
     } catch (error) {
       console.error('Failed to save to localStorage:', error);
     }
@@ -24,7 +24,7 @@ const App: React.FC = () => {
     <AppContext.Provider value={{ state, dispatch }}>
       <Toaster />
       <Header />
-      <div className="min-h-screen bg-gray-50">
+      <div className=" bg-gray-50">
         <main className="max-w-6xl mx-auto p-6 h-full space-y-5">
           <AllSnippets state={state} dispatch={dispatch} />
           <Workspace />

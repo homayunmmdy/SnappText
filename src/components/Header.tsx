@@ -11,7 +11,7 @@ const Header = () => {
     <header className="bg-red-500 text-white p-6 shadow-lg">
       <div className="max-w-6xl mx-auto flex justify-between items-center">
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold">SnapText</h1>
+          <h1 className="text-2xl md:text-3xl font-bold">Snapp Text</h1>
           <p className="text-red-100 hidden md:block mt-1">Quick snippets, instant copy</p>
         </div>
         <button

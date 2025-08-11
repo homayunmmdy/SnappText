@@ -65,7 +65,7 @@ const appReducer = (state: AppStateType, action: ActionType): AppStateType => {
   // Save to localStorage (except for LOAD_DATA to prevent infinite loop)
   if (action.type !== "LOAD_DATA") {
     try {
-      localStorage.setItem("snaptext-data", JSON.stringify(newState));
+      localStorage.setItem("snapptext-data", JSON.stringify(newState));
     } catch (error) {
       console.error("Failed to save to localStorage:", error);
     }
