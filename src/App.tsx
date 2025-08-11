@@ -7,45 +7,21 @@ import React, {
   useState,
 } from "react";
 import toast, { Toaster } from "react-hot-toast";
-
-// Types
-interface Snippet {
-  id: string;
-  title: string;
-  description: string;
-  createdAt: Date;
-}
-
-interface PlaceholderValue {
-  [key: string]: string;
-}
-
-interface AppState {
-  snippets: Snippet[];
-  isModalOpen: boolean;
-  isFormOpen: boolean;
-  editingSnippet: Snippet | null;
-  currentSnippet: Snippet | null;
-  placeholders: string[];
-}
-
-type Action =
-  | { type: "ADD_SNIPPET"; snippet: Snippet }
-  | { type: "UPDATE_SNIPPET"; snippet: Snippet }
-  | { type: "DELETE_SNIPPET"; id: string }
-  | { type: "OPEN_MODAL"; snippet: Snippet; placeholders: string[] }
-  | { type: "CLOSE_MODAL" }
-  | { type: "OPEN_FORM"; snippet?: Snippet }
-  | { type: "CLOSE_FORM" };
+import type {
+  ActionType,
+  AppStateType,
+  PlaceholderValueType,
+  SnippetType,
+} from "./types";
 
 // Context
 const AppContext = createContext<{
-  state: AppState;
-  dispatch: React.Dispatch<Action>;
+  state: AppStateType;
+  dispatch: React.Dispatch<ActionType>;
 } | null>(null);
 
 // Reducer
-const appReducer = (state: AppState, action: Action): AppState => {
+const appReducer = (state: AppStateType, action: ActionType): AppStateType => {
   switch (action.type) {
     case "ADD_SNIPPET":
       return { ...state, snippets: [...state.snippets, action.snippet] };
@@ -97,7 +73,7 @@ const extractPlaceholders = (text: string): string[] => {
 
 const replacePlaceholders = (
   text: string,
-  values: PlaceholderValue
+  values: PlaceholderValueType
 ): string => {
   return text.replace(
     /\{\{([^}]+)\}\}/g,
@@ -140,7 +116,7 @@ const Header: React.FC = () => {
 };
 
 // Snippet Card Component
-const SnippetCard: React.FC<{ snippet: Snippet }> = ({ snippet }) => {
+const SnippetCard: React.FC<{ snippet: SnippetType }> = ({ snippet }) => {
   const context = useContext(AppContext);
 
   if (!context) return null;
@@ -164,7 +140,7 @@ const SnippetCard: React.FC<{ snippet: Snippet }> = ({ snippet }) => {
   const handleDelete = () => {
     if (window.confirm("Delete this snippet?")) {
       dispatch({ type: "DELETE_SNIPPET", id: snippet.id });
-      toast.success('Snippet deleted')
+      toast.success("Snippet deleted");
     }
   };
 
@@ -206,8 +182,6 @@ const SnippetCard: React.FC<{ snippet: Snippet }> = ({ snippet }) => {
           </button>
         </div>
       </div>
-
-      
     </>
   );
 };
@@ -215,7 +189,7 @@ const SnippetCard: React.FC<{ snippet: Snippet }> = ({ snippet }) => {
 // Placeholder Modal Component
 const PlaceholderModal: React.FC = () => {
   const context = useContext(AppContext);
-  const [values, setValues] = useState<PlaceholderValue>({});
+  const [values, setValues] = useState<PlaceholderValueType>({});
 
   if (!context) return null;
   const { state, dispatch } = context;
