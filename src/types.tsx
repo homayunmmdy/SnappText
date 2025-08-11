@@ -10,19 +10,19 @@ export interface PlaceholderValueType {
 }
 
 export interface AppStateType {
-  snippets: Snippet[];
+  snippets: SnippetType[];
   isModalOpen: boolean;
   isFormOpen: boolean;
-  editingSnippet: Snippet | null;
-  currentSnippet: Snippet | null;
+  editingSnippet: SnippetType | null;
+  currentSnippet: SnippetType | null;
   placeholders: string[];
 }
 
 export type ActionType =
-  | { type: "ADD_SNIPPET"; snippet: Snippet }
-  | { type: "UPDATE_SNIPPET"; snippet: Snippet }
+  | { type: "ADD_SNIPPET"; snippet: SnippetType }
+  | { type: "UPDATE_SNIPPET"; snippet: SnippetType }
   | { type: "DELETE_SNIPPET"; id: string }
-  | { type: "OPEN_MODAL"; snippet: Snippet; placeholders: string[] }
+  | { type: "OPEN_MODAL"; snippet: SnippetType; placeholders: string[] }
   | { type: "CLOSE_MODAL" }
-  | { type: "OPEN_FORM"; snippet?: Snippet }
+  | { type: "OPEN_FORM"; snippet?: SnippetType }
   | { type: "CLOSE_FORM" };
