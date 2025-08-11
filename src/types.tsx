@@ -17,6 +17,7 @@ export interface AppStateType {
   currentSnippet: SnippetType | null;
   placeholders: string[];
   workspaceText: string;
+  searchTerm: string;
 }
 
 export type ActionType =
@@ -27,10 +28,9 @@ export type ActionType =
   | { type: "CLOSE_MODAL" }
   | { type: "OPEN_FORM"; snippet?: SnippetType }
   | { type: "CLOSE_FORM" }
-  | { type: 'SET_WORKSPACE_TEXT'; text: string }
-  | { type: 'LOAD_DATA'; data: AppStateType };
-
-
+  | { type: "SET_WORKSPACE_TEXT"; text: string }
+  | { type: "LOAD_DATA"; data: AppStateType }
+  | { type: "SET_SEARCH_TERM"; term: string };
 
 export type AppContextType = React.Context<{
   state: AppStateType;

@@ -70,5 +70,6 @@ export const getInitialState = () => {
     currentSnippet: null,
     placeholders: [],
     workspaceText: "",
+    searchTerm: '',
   };
 };
