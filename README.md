@@ -1,9 +1,9 @@
-# 🔴 SnapText
+# 🔴 Snapp Text
 
 <img width="1920" height="1148" alt="screencapture-localhost-5173-2025-08-12-01_42_28" src="https://github.com/user-attachments/assets/5c22f794-5bf6-4df6-b79d-06f27a44ab19" />
 
 
-SnapText is a fast and minimal snippet manager for reusable text templates with dynamic placeholders.
+Snapp Text is a fast and minimal snippet manager for reusable text templates with dynamic placeholders.
 
 ### ✨ Features
 
@@ -44,8 +44,8 @@ When you click the snippet card:
 ### 🚀 Getting Started
 
 ```bash
-git clone https://github.com/yourusername/snaptext.git
-cd snaptext
+git clone https://github.com/yourusername/Snapp Text.git
+cd Snapp Text
 npm install
 npm run dev
 ```
