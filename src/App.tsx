@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import PlaceholderModal from "./components/PlaceholderModal";
 import SnippetForm from "./components/SnippetForm";
+import Workspace from "./components/Workspace";
 import { AppContext } from "./Utility/util";
 
 const App: React.FC = () => {
@@ -37,19 +38,23 @@ const App: React.FC = () => {
     editingSnippet: null,
     currentSnippet: null,
     placeholders: [],
+    workspaceText: "",
   });
 
   return (
     <AppContext.Provider value={{ state, dispatch }}>
       <Toaster />
-        <Header />
+      <Header />
       <div className="min-h-screen bg-gray-50">
-        <AllSnippets state={state} dispatch={dispatch} />
-
+        <main className="max-w-6xl mx-auto p-6 h-full space-y-5">
+          <AllSnippets state={state} dispatch={dispatch} />
+          <Workspace />
+        </main>
         <PlaceholderModal />
+
         <SnippetForm />
       </div>
-        <Footer />
+      <Footer />
     </AppContext.Provider>
   );
 };

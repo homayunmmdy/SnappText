@@ -9,7 +9,7 @@ interface Props {
 }
 const AllSnippets = ({ state, dispatch }: Props) => {
   return (
-    <main className="max-w-6xl mx-auto p-6 h-full">
+    <>
       {state.snippets.length === 0 ? (
         <div className="text-center py-12">
           <div className="text-gray-400 mb-4">
@@ -35,7 +35,7 @@ const AllSnippets = ({ state, dispatch }: Props) => {
           ))}
         </div>
       )}
-    </main>
+    </>
   );
 };
 
